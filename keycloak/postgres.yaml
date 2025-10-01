@@ -1,0 +1,44 @@
+apiVersion: postgres-operator.crunchydata.com/v1beta1
+kind: PostgresCluster
+metadata:
+  name: keycloakdb
+spec:
+  backups:
+    pgbackrest:
+      global:
+        repo1-retention-full: "60"
+        repo1-retention-full-type: time
+      image: registry.developers.crunchydata.com/crunchydata/crunchy-pgbackrest:ubi8-2.41-4
+      repos:
+        - name: repo1
+          schedules:
+            differential: 0 1 2-16,18-31 * *
+            full: 0 1 */16 * *
+          volume:
+            volumeClaimSpec:
+              accessModes:
+                - ReadWriteOnce
+              resources:
+                requests:
+                  storage: 4Gi
+  databaseInitSQL:
+    key: init.sql
+    name: keycloakdb-init-sql
+  image: registry.developers.crunchydata.com/crunchydata/crunchy-postgres:ubi8-15.2-0
+  instances:
+    - affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchLabels:
+                  postgres-operator.crunchydata.com/cluster: keycloakdb
+                  postgres-operator.crunchydata.com/instance-set: "00"
+              topologyKey: kubernetes.io/hostname
+      dataVolumeClaimSpec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 1Gi
+      replicas: 2
+  postgresVersion: 15

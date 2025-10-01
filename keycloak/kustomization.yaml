@@ -1,0 +1,22 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+configMapGenerator:
+  - files:
+      - init.sql=postgres-init.sql
+    name: keycloakdb-init-sql
+generatorOptions:
+  disableNameSuffixHash: true
+kind: Kustomization
+resources:
+  - keycloak-admin-ingress.yaml
+  - keycloak-realm.yaml
+  - keycloak.yaml
+  - postgres.yaml
+secretGenerator:
+  - literals:
+      - log-level=org.keycloak.authentication.authenticators.browser.ScriptBasedAuthenticator:debug
+      - tenant-tag=insight-root
+      - client-id=admin
+      - client-secret=115f685f-eebf-4619-b9d7-f68d21c7a1a0
+      - base-url=https://irongate.localhost/api/v1
+      - oidc-url=https://irongate.localhost/oidc
+    name: keycloak-options

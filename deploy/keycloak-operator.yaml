@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  name: keycloak-operator
+spec:
+  destination:
+    name: in-cluster
+    namespace: sops-keycloak
+  project: default
+  source:
+    path: keycloak-operator
+    repoURL: https://github.com/DevalexLLC/argocd-cluster-test
+    targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    managedNamespaceMetadata:
+      labels:
+        linkerd.io/inject: enabled
+        pod-security.kubernetes.io/enforce: baseline
+    syncOptions:
+      - CreateNamespace=true
