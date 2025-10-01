@@ -1,9 +1,9 @@
 apiVersion: k8s.keycloak.org/v2alpha1
 kind: KeycloakRealmImport
 metadata:
-  name: sops-keycloak-realm
+  name: keycloak-realm
 spec:
-  keycloakCRName: sops-keycloak
+  keycloakCRName: keycloak
   realm:
     accessCodeLifespan: 60
     accessCodeLifespanLogin: 1800
@@ -1277,7 +1277,7 @@ spec:
         standardFlowEnabled: true
         surrogateAuthRequired: false
         webOrigins: []
-      - adminUrl: https://outline.localhost
+      - adminUrl: https://sops-outline.orlandotorres.dev
         alwaysDisplayInConsole: false
         attributes:
           backchannel.logout.revoke.offline.tokens: "false"
@@ -1322,13 +1322,13 @@ spec:
         publicClient: false
         redirectUris:
           - /auth/oidc.callback
-        rootUrl: https://outline.localhost
+        rootUrl: https://sops-outline.orlandotorres.dev
         secret: sypgwZpJbbD8stJ5yCBu7WHzr3hSrtlT
         serviceAccountsEnabled: false
         standardFlowEnabled: true
         surrogateAuthRequired: false
         webOrigins:
-          - https://outline.localhost
+          - https://sops-outline.orlandotorres.dev
       - alwaysDisplayInConsole: false
         attributes:
           post.logout.redirect.uris: +

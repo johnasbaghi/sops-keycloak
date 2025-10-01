@@ -60,8 +60,8 @@ spec:
       - scripts
       - update-email
   hostname:
-    admin: https://keycloak.localhost
-    hostname: https://auth.localhost
+    admin: https://sops-keycloak.orlandotorres.dev
+    hostname: https://sops-auth.orlandotorres.dev
   http:
     httpEnabled: true
   ingress:
@@ -112,7 +112,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-    - host: auth.localhost
+    - host: sops-auth.orlandotorres.dev
       http:
         paths:
           - backend:
@@ -131,4 +131,4 @@ spec:
             pathType: Prefix
   tls:
     - hosts:
-        - '*.localhost'
+        - '*.orlandotorres.dev'

@@ -17,6 +17,6 @@ secretGenerator:
       - tenant-tag=insight-root
       - client-id=admin
       - client-secret=115f685f-eebf-4619-b9d7-f68d21c7a1a0
-      - base-url=https://irongate.localhost/api/v1
-      - oidc-url=https://irongate.localhost/oidc
+      - base-url=https://irongate.orlandotorres.dev/api/v1
+      - oidc-url=https://irongate.orlandotorres.dev/oidc
     name: keycloak-options

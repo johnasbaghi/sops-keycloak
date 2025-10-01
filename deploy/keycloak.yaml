@@ -1,19 +1,17 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  annotations:
-    argocd.argoproj.io/sync-wave: "2"
   finalizers:
     - resources-finalizer.argocd.argoproj.io
-  name: keycloak
+  name: sops-keycloak
 spec:
   destination:
     name: in-cluster
-    namespace: keycloak
+    namespace: sops-keycloak
   project: default
   source:
     path: keycloak
-    repoURL: https://github.com/DevalexLLC/argocd-cluster-test
+    repoURL: https://github.com/DevalexLLC/sops-keycloak
     targetRevision: HEAD
   syncPolicy:
     automated:
