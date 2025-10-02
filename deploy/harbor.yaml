@@ -24,7 +24,7 @@ spec:
                     "oidc_auto_onboard": "true",
                     "oidc_client_id": "harbor-prod",
                     "oidc_client_secret": "srZggUINXojKLIdx34s0FX2Z8UpQQWNC",
-                    "oidc_endpoint": "https://sops-auth.orlandotorres.dev/realms/keycloak-realm",
+                    "oidc_endpoint": "https://sops-auth.orlandotorres.dev/realms/dev-test",
                     "oidc_groups_claim": "groups",
                     "oidc_name": "Keycloak",
                     "oidc_scope": "openid,groups,offline_access",
