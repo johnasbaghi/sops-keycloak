@@ -1,0 +1,80 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  name: sops-harbor
+  namespace: argocd
+spec:
+  destination:
+    name: in-cluster
+    namespace: harbor
+  project: default
+  sources:
+    - chart: harbor
+      helm:
+        valuesObject:
+          core:
+            extraEnvVars:
+              - name: CONFIG_OVERWRITE_JSON
+                value: |-
+                  {
+                    "auth_mode": "oidc_auth",
+                    "oidc_admin_group": "Harbor Admins",
+                    "oidc_auto_onboard": "true",
+                    "oidc_client_id": "harbor-prod",
+                    "oidc_client_secret": "srZggUINXojKLIdx34s0FX2Z8UpQQWNC",
+                    "oidc_endpoint": "https://sops-auth.orlandotorres.dev/realms/keycloak-realm",
+                    "oidc_groups_claim": "groups",
+                    "oidc_name": "Keycloak",
+                    "oidc_scope": "openid,groups,offline_access",
+                    "oidc_user_claim": "preferred_username",
+                    "oidc_verify_cert": "false"
+                  }
+            secret: ruoZoWjiB19rIjhk
+            secretName: harbor-token-tls
+            xsrfKey: o99bqtKEOOP7w7pjIbgapQitV2E2ZHa2
+          expose:
+            ingress:
+              className: nginx
+              hosts:
+                core: sops-harbor.orlandotorres.dev
+            tls:
+              certSource: none
+              enabled: true
+            type: ingress
+          externalURL: https://sops-harbor.orlandotorres.dev
+          harborAdminPassword: changeme
+          internalTLS:
+            enabled: false
+          jobservice:
+            secret: Bv2VLuVLjZkHvuhv
+          persistence:
+            imageChartStorage:
+              disableredirect: true
+              s3:
+                bucket: registry
+                existingSecret: minio-creds
+                region: us-east-1
+                regionendpoint: s3.orlandotorres.dev
+                secure: true
+                skipverify: true
+              type: s3
+          registry:
+            credentials:
+              htpasswdString: harbor_registry_user:$2a$10$RpxCLSBuo/py.8BxU3sXoezNBZF8oT.ZTsUpJ6KxZXPnHhMV7WEEK
+            secret: U5P8BVEwsJVArMlz
+      repoURL: https://helm.goharbor.io
+      targetRevision: 1.15.1
+    - path: harbor
+      repoURL: https://github.com/DevalexLLC/argocd-cluster-test
+      targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    managedNamespaceMetadata:
+      labels:
+        pod-security.kubernetes.io/enforce: baseline
+    syncOptions:
+      - CreateNamespace=true

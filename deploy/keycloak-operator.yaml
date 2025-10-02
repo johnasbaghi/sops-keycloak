@@ -4,6 +4,7 @@ metadata:
   finalizers:
     - resources-finalizer.argocd.argoproj.io
   name: sops-keycloak-operator
+  namespace: argocd
 spec:
   destination:
     name: in-cluster

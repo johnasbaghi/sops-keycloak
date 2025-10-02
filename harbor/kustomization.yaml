@@ -1,0 +1,11 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+generatorOptions:
+  disableNameSuffixHash: true
+kind: Kustomization
+resources:
+  - harbor-token-ca.yaml
+secretGenerator:
+  - literals:
+      - REGISTRY_STORAGE_S3_ACCESSKEY=minio-harbor-user
+      - REGISTRY_STORAGE_S3_SECRETKEY=gnlMdt7AeLMB9KF27akt9seon8hU7yS4EmpGa6f0
+    name: minio-creds

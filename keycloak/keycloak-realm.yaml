@@ -1277,21 +1277,23 @@ spec:
         standardFlowEnabled: true
         surrogateAuthRequired: false
         webOrigins: []
-      - adminUrl: https://sops-outline.orlandotorres.dev
+
+      - adminUrl: https://sops-harbor.orlandotorres.dev
         alwaysDisplayInConsole: false
         attributes:
           backchannel.logout.revoke.offline.tokens: "false"
           backchannel.logout.session.required: "true"
-          client.secret.creation.time: "1736059212"
+          client.secret.creation.time: "1735706688"
           display.on.consent.screen: "false"
           oauth2.device.authorization.grant.enabled: "false"
           oidc.ciba.grant.enabled: "false"
+          post.logout.redirect.uris: +
           realm_client: "false"
         authenticationFlowBindingOverrides: {}
         baseUrl: ""
         bearerOnly: false
         clientAuthenticatorType: client-secret
-        clientId: outline-prod
+        clientId: harbor-prod
         consentRequired: false
         defaultClientScopes:
           - web-origins
@@ -1305,9 +1307,9 @@ spec:
         enabled: true
         frontchannelLogout: true
         fullScopeAllowed: true
-        id: afbfb5cf-67f4-4fc4-aa87-18863ca19853
+        id: f6f99de5-633c-4611-9d9e-a60dde37dd4e
         implicitFlowEnabled: false
-        name: Outline Client
+        name: Harbor Client
         nodeReRegistrationTimeout: -1
         notBefore: 0
         optionalClientScopes:
@@ -1321,14 +1323,15 @@ spec:
         protocol: openid-connect
         publicClient: false
         redirectUris:
-          - /auth/oidc.callback
-        rootUrl: https://sops-outline.orlandotorres.dev
-        secret: sypgwZpJbbD8stJ5yCBu7WHzr3hSrtlT
+          - /c/oidc/callback
+        rootUrl: https://sops-harbor.orlandotorres.dev
+        secret: srZggUINXojKLIdx34s0FX2Z8UpQQWNC
         serviceAccountsEnabled: false
         standardFlowEnabled: true
         surrogateAuthRequired: false
         webOrigins:
-          - https://sops-outline.orlandotorres.dev
+          - https://sops-harbor.orlandotorres.dev
+
       - alwaysDisplayInConsole: false
         attributes:
           post.logout.redirect.uris: +
