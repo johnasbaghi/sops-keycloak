@@ -12,7 +12,7 @@ spec:
   project: default
   source:
     path: keycloak
-    repoURL: https://github.com/DevalexLLC/sops-keycloak
+    repoURL: https://github.com/johnasbaghi/sops-keycloak
     targetRevision: HEAD
   syncPolicy:
     automated:

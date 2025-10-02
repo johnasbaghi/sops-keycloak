@@ -67,7 +67,7 @@ spec:
       repoURL: https://helm.goharbor.io
       targetRevision: 1.15.1
     - path: harbor
-      repoURL: https://github.com/DevalexLLC/argocd-cluster-test
+      repoURL: https://github.com/johnasbaghi/sops-keycloak
       targetRevision: HEAD
   syncPolicy:
     automated:
