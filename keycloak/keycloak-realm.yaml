@@ -1241,6 +1241,111 @@ spec:
         standardFlowEnabled: false
         surrogateAuthRequired: false
         webOrigins: []
+      - adminUrl: https://argocd.localhost
+        alwaysDisplayInConsole: false
+        attributes:
+          backchannel.logout.revoke.offline.tokens: "false"
+          backchannel.logout.session.required: "true"
+          client.secret.creation.time: "1735705932"
+          oauth2.device.authorization.grant.enabled: "false"
+          oidc.ciba.grant.enabled: "false"
+          post.logout.redirect.uris: +
+          realm_client: "false"
+        authenticationFlowBindingOverrides: {}
+        baseUrl: /applications
+        bearerOnly: false
+        clientAuthenticatorType: client-secret
+        clientId: argocd-prod
+        consentRequired: false
+        defaultClientScopes:
+          - web-origins
+          - acr
+          - profile
+          - roles
+          - basic
+          - email
+        description: ""
+        directAccessGrantsEnabled: true
+        enabled: true
+        frontchannelLogout: true
+        fullScopeAllowed: true
+        id: 0e4714bc-c024-48b8-b192-d29a5e8c52d7
+        implicitFlowEnabled: false
+        name: ArgoCD Client
+        nodeReRegistrationTimeout: -1
+        notBefore: 0
+        optionalClientScopes:
+          - tenants
+          - address
+          - phone
+          - offline_access
+          - internal_groups
+          - groups
+          - microprofile-jwt
+        protocol: openid-connect
+        publicClient: false
+        redirectUris:
+          - /auth/callback
+        rootUrl: https://argocd.localhost
+        secret: Trib33Jjp0r8tQS1NCkpY1YQMaISVlJC
+        serviceAccountsEnabled: false
+        standardFlowEnabled: true
+        surrogateAuthRequired: false
+        webOrigins:
+          - https://argocd.localhost
+      - adminUrl: https://argo-workflows.localhost
+        alwaysDisplayInConsole: false
+        attributes:
+          backchannel.logout.revoke.offline.tokens: "false"
+          backchannel.logout.session.required: "true"
+          client.secret.creation.time: "1735706964"
+          display.on.consent.screen: "false"
+          oauth2.device.authorization.grant.enabled: "false"
+          oidc.ciba.grant.enabled: "false"
+          post.logout.redirect.uris: +
+          realm_client: "false"
+        authenticationFlowBindingOverrides: {}
+        baseUrl: /workflows
+        bearerOnly: false
+        clientAuthenticatorType: client-secret
+        clientId: argo-prod
+        consentRequired: false
+        defaultClientScopes:
+          - web-origins
+          - acr
+          - profile
+          - roles
+          - basic
+          - email
+        description: ""
+        directAccessGrantsEnabled: true
+        enabled: true
+        frontchannelLogout: true
+        fullScopeAllowed: true
+        id: f0d6eb71-ad05-41cc-a21c-315d095321df
+        implicitFlowEnabled: false
+        name: Argo Workflows Client
+        nodeReRegistrationTimeout: -1
+        notBefore: 0
+        optionalClientScopes:
+          - tenants
+          - address
+          - phone
+          - offline_access
+          - internal_groups
+          - groups
+          - microprofile-jwt
+        protocol: openid-connect
+        publicClient: false
+        redirectUris:
+          - /oauth2/callback
+        rootUrl: https://argo-workflows.localhost
+        secret: DnbqWVVvIL8OJJ6zicWLIQikuVJy529t
+        serviceAccountsEnabled: false
+        standardFlowEnabled: true
+        surrogateAuthRequired: false
+        webOrigins:
+          - https://argo-workflows.localhost
       - alwaysDisplayInConsole: false
         attributes:
           post.logout.redirect.uris: +
@@ -1277,8 +1382,75 @@ spec:
         standardFlowEnabled: true
         surrogateAuthRequired: false
         webOrigins: []
-
-      - adminUrl: https://sops-harbor.orlandotorres.dev
+      - adminUrl: https://grafana.localhost
+        alwaysDisplayInConsole: false
+        attributes:
+          backchannel.logout.revoke.offline.tokens: "false"
+          backchannel.logout.session.required: "true"
+          client.secret.creation.time: "1736471923"
+          display.on.consent.screen: "false"
+          oauth2.device.authorization.grant.enabled: "false"
+          oidc.ciba.grant.enabled: "false"
+          realm_client: "false"
+        authenticationFlowBindingOverrides: {}
+        baseUrl: ""
+        bearerOnly: false
+        clientAuthenticatorType: client-secret
+        clientId: grafana-prod
+        consentRequired: false
+        defaultClientScopes:
+          - web-origins
+          - acr
+          - offline_access
+          - profile
+          - roles
+          - basic
+          - email
+        description: ""
+        directAccessGrantsEnabled: true
+        enabled: true
+        frontchannelLogout: true
+        fullScopeAllowed: true
+        id: f98e68c9-84fb-4cff-97a6-06f683128b59
+        implicitFlowEnabled: false
+        name: Grafana Client
+        nodeReRegistrationTimeout: -1
+        notBefore: 0
+        optionalClientScopes:
+          - tenants
+          - address
+          - phone
+          - internal_groups
+          - groups
+          - microprofile-jwt
+        protocol: openid-connect
+        protocolMappers:
+          - config:
+              access.token.claim: "true"
+              claim.name: roles
+              id.token.claim: "true"
+              introspection.token.claim: "true"
+              jsonType.label: String
+              lightweight.claim: "false"
+              multivalued: "true"
+              userinfo.token.claim: "true"
+              usermodel.clientRoleMapping.clientId: grafana-prod
+            consentRequired: false
+            id: 5294bb9f-d608-4f34-b98c-601dfbdf0a09
+            name: client roles
+            protocol: openid-connect
+            protocolMapper: oidc-usermodel-client-role-mapper
+        publicClient: false
+        redirectUris:
+          - /login/generic_oauth
+        rootUrl: https://grafana.localhost
+        secret: pvXlCpL1NyvaslgzBCrWHhmLpcSTcGNp
+        serviceAccountsEnabled: false
+        standardFlowEnabled: true
+        surrogateAuthRequired: false
+        webOrigins:
+          - https://grafana.localhost
+      - adminUrl: https://harbor.localhost
         alwaysDisplayInConsole: false
         attributes:
           backchannel.logout.revoke.offline.tokens: "false"
@@ -1324,14 +1496,245 @@ spec:
         publicClient: false
         redirectUris:
           - /c/oidc/callback
-        rootUrl: https://sops-harbor.orlandotorres.dev
+        rootUrl: https://harbor.localhost
         secret: srZggUINXojKLIdx34s0FX2Z8UpQQWNC
         serviceAccountsEnabled: false
         standardFlowEnabled: true
         surrogateAuthRequired: false
         webOrigins:
-          - https://sops-harbor.orlandotorres.dev
-
+          - https://harbor.localhost
+      - adminUrl: https://illumina.localhost
+        alwaysDisplayInConsole: false
+        attributes:
+          backchannel.logout.revoke.offline.tokens: "false"
+          backchannel.logout.session.required: "true"
+          display.on.consent.screen: "false"
+          oauth2.device.authorization.grant.enabled: "false"
+          oidc.ciba.grant.enabled: "false"
+          realm_client: "false"
+        authenticationFlowBindingOverrides: {}
+        baseUrl: ""
+        bearerOnly: false
+        clientAuthenticatorType: client-secret
+        clientId: illumina-prod
+        consentRequired: false
+        defaultClientScopes:
+          - web-origins
+          - acr
+          - profile
+          - roles
+          - basic
+          - email
+        description: ""
+        directAccessGrantsEnabled: false
+        enabled: true
+        frontchannelLogout: true
+        fullScopeAllowed: true
+        id: bc736265-b415-4a80-8f56-e0f9fddc28f2
+        implicitFlowEnabled: false
+        name: Illumina Client
+        nodeReRegistrationTimeout: -1
+        notBefore: 0
+        optionalClientScopes:
+          - tenants
+          - address
+          - phone
+          - offline_access
+          - internal_groups
+          - groups
+          - microprofile-jwt
+        protocol: openid-connect
+        publicClient: true
+        redirectUris:
+          - /api/auth/callback/keycloak
+        rootUrl: https://illumina.localhost
+        serviceAccountsEnabled: false
+        standardFlowEnabled: true
+        surrogateAuthRequired: false
+        webOrigins:
+          - https://illumina.localhost
+      - adminUrl: https://minio.localhost
+        alwaysDisplayInConsole: true
+        attributes:
+          access.token.lifespan: "3600"
+          acr.loa.map: '{}'
+          backchannel.logout.revoke.offline.tokens: "false"
+          backchannel.logout.session.required: "true"
+          client.secret.creation.time: "1735706873"
+          client_credentials.use_refresh_token: "false"
+          display.on.consent.screen: "false"
+          oauth2.device.authorization.grant.enabled: "false"
+          oidc.ciba.grant.enabled: "false"
+          post.logout.redirect.uris: +
+          realm_client: "false"
+          require.pushed.authorization.requests: "false"
+          tls.client.certificate.bound.access.tokens: "false"
+          token.response.type.bearer.lower-case: "false"
+          use.jwks.url: "true"
+          use.refresh.tokens: "true"
+        authenticationFlowBindingOverrides: {}
+        baseUrl: /realms/dev-test/account/
+        bearerOnly: false
+        clientAuthenticatorType: client-secret
+        clientId: minio-prod
+        consentRequired: false
+        defaultClientScopes:
+          - web-origins
+          - acr
+          - profile
+          - roles
+          - minio-authorization
+          - basic
+          - email
+        description: ""
+        directAccessGrantsEnabled: true
+        enabled: true
+        frontchannelLogout: true
+        fullScopeAllowed: true
+        id: 9612d226-6bf4-46d5-966c-0c6406711f6b
+        implicitFlowEnabled: false
+        name: MinIO Tenant Client
+        nodeReRegistrationTimeout: -1
+        notBefore: 0
+        optionalClientScopes:
+          - tenants
+          - address
+          - phone
+          - offline_access
+          - internal_groups
+          - groups
+          - microprofile-jwt
+        protocol: openid-connect
+        publicClient: false
+        redirectUris:
+          - /oauth_callback
+        rootUrl: https://minio.localhost
+        secret: zH9XPCHqjnzxME7IQRNmWK14u7qTIPVs
+        serviceAccountsEnabled: false
+        standardFlowEnabled: true
+        surrogateAuthRequired: false
+        webOrigins:
+          - https://minio.localhost
+      - adminUrl: https://open-webui.localhost
+        alwaysDisplayInConsole: false
+        attributes:
+          backchannel.logout.revoke.offline.tokens: "false"
+          backchannel.logout.session.required: "true"
+          client.secret.creation.time: "1738491961"
+          display.on.consent.screen: "false"
+          oauth2.device.authorization.grant.enabled: "false"
+          oidc.ciba.grant.enabled: "false"
+          realm_client: "false"
+        authenticationFlowBindingOverrides: {}
+        baseUrl: ""
+        bearerOnly: false
+        clientAuthenticatorType: client-secret
+        clientId: open-webui-prod
+        consentRequired: false
+        defaultClientScopes:
+          - web-origins
+          - acr
+          - profile
+          - roles
+          - basic
+          - email
+        description: ""
+        directAccessGrantsEnabled: true
+        enabled: true
+        frontchannelLogout: true
+        fullScopeAllowed: true
+        id: bc1f0026-4e4b-4b76-9f2e-bae9c3131470
+        implicitFlowEnabled: false
+        name: Open WebUI Client
+        nodeReRegistrationTimeout: -1
+        notBefore: 0
+        optionalClientScopes:
+          - tenants
+          - address
+          - phone
+          - offline_access
+          - internal_groups
+          - groups
+          - microprofile-jwt
+        protocol: openid-connect
+        protocolMappers:
+          - config:
+              access.token.claim: "true"
+              claim.name: resource_access.${client_id}.roles
+              id.token.claim: "true"
+              introspection.token.claim: "true"
+              jsonType.label: String
+              lightweight.claim: "false"
+              multivalued: "true"
+              user.attribute: foo
+              userinfo.token.claim: "false"
+              usermodel.clientRoleMapping.clientId: open-webui-prod
+            consentRequired: false
+            id: eb08ee81-3239-4cf2-b9e1-4f136f46d3e1
+            name: client roles
+            protocol: openid-connect
+            protocolMapper: oidc-usermodel-client-role-mapper
+        publicClient: false
+        redirectUris:
+          - /oauth/oidc/callback
+        rootUrl: https://open-webui.localhost
+        secret: jaiDXffHVy1g0s6VG7OOApodVj1vRmaE
+        serviceAccountsEnabled: false
+        standardFlowEnabled: true
+        surrogateAuthRequired: false
+        webOrigins: []
+      - adminUrl: https://outline.localhost
+        alwaysDisplayInConsole: false
+        attributes:
+          backchannel.logout.revoke.offline.tokens: "false"
+          backchannel.logout.session.required: "true"
+          client.secret.creation.time: "1736059212"
+          display.on.consent.screen: "false"
+          oauth2.device.authorization.grant.enabled: "false"
+          oidc.ciba.grant.enabled: "false"
+          realm_client: "false"
+        authenticationFlowBindingOverrides: {}
+        baseUrl: ""
+        bearerOnly: false
+        clientAuthenticatorType: client-secret
+        clientId: outline-prod
+        consentRequired: false
+        defaultClientScopes:
+          - web-origins
+          - acr
+          - profile
+          - roles
+          - basic
+          - email
+        description: ""
+        directAccessGrantsEnabled: true
+        enabled: true
+        frontchannelLogout: true
+        fullScopeAllowed: true
+        id: afbfb5cf-67f4-4fc4-aa87-18863ca19853
+        implicitFlowEnabled: false
+        name: Outline Client
+        nodeReRegistrationTimeout: -1
+        notBefore: 0
+        optionalClientScopes:
+          - tenants
+          - address
+          - phone
+          - offline_access
+          - internal_groups
+          - groups
+          - microprofile-jwt
+        protocol: openid-connect
+        publicClient: false
+        redirectUris:
+          - /auth/oidc.callback
+        rootUrl: https://outline.localhost
+        secret: sypgwZpJbbD8stJ5yCBu7WHzr3hSrtlT
+        serviceAccountsEnabled: false
+        standardFlowEnabled: true
+        surrogateAuthRequired: false
+        webOrigins:
+          - https://outline.localhost
       - alwaysDisplayInConsole: false
         attributes:
           post.logout.redirect.uris: +
@@ -1424,6 +1827,240 @@ spec:
         surrogateAuthRequired: false
         webOrigins:
           - +
+      - adminUrl: ""
+        alwaysDisplayInConsole: false
+        attributes:
+          display.on.consent.screen: "false"
+          realm_client: "false"
+          saml.allow.ecp.flow: "false"
+          saml.artifact.binding: "false"
+          saml.artifact.binding.identifier: uRlWUWkjbWu22LRDrWX46NPpC2g=
+          saml.assertion.signature: "false"
+          saml.authnstatement: "true"
+          saml.client.signature: "false"
+          saml.encrypt: "false"
+          saml.force.post.binding: "true"
+          saml.onetimeuse.condition: "false"
+          saml.server.signature: "true"
+          saml.server.signature.keyinfo.ext: "false"
+          saml.server.signature.keyinfo.xmlSigKeyInfoKeyNameTransformer: NONE
+          saml.signature.algorithm: RSA_SHA256
+          saml.signing.certificate: MIICqzCCAZMCBgGUbfUMYDANBgkqhkiG9w0BAQsFADAZMRcwFQYDVQQDDA5zb25hcnF1YmUtcHJvZDAeFw0yNTAxMTYwNzExMDNaFw0zNTAxMTYwNzEyNDNaMBkxFzAVBgNVBAMMDnNvbmFycXViZS1wcm9kMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA7gPLZb+qHvg3GuZmef35AZmCnzUDb2tTutmg5YimTPnFNJi5fD2OUe2+Myi4nsLiwLjbmkI6jt+BhQcC2p910S6ctVgYv8KgqrRYxPdV3bX2VSjieow92+ayG+3pdNsy3XsNj9BukuZyhfmh975A0VSecap/jY4mwFBPloh1jpF8O/7J/ZcF970CIJhoTBUsGgxClgNJLbmqbOooTWsxwlqa/Jqhy6+EVNn5mGzkusrXjrEZvULI+SJkpWIo4lNKbeiRyMmb2rTORcpGHvE5wwFEzrK6W/03QirSQ509qWhrTobtuqhAulxTwxiU0F4bO6sD/xp0TU6gUoyEWazftQIDAQABMA0GCSqGSIb3DQEBCwUAA4IBAQDms4V7oAm3qk97nN+0svovGdB36kx4FQE+oVb24Qgz1hSOVLxV+9TUiGS+olwn6A56tyTKLIf62IOMpvkHseFh2LYRbxZckyNMdCppJbiMoijGC/K9BjIzTzckVgHCeyUu4mxgElJLm0mZrqktzE9K9Rgpcmf5QNuA7ZTH/mwjszJTWUX1s8QdNpOs5uDCnY5Gijtliu+L9s/o4ZZnarwLikqQPrZuEmQvuXjCkvcoZWVyREvMpPS/BEcAUdBRI4NQu7LoDG+ait+cUwF00KrE7oHVp6lEXBASv2X+XR4ssXWQkiHTkU5Di2Y6XuJ1k1/V93k/45d9H9FnLvOwIvME
+          saml.signing.private.key: MIIEowIBAAKCAQEA7gPLZb+qHvg3GuZmef35AZmCnzUDb2tTutmg5YimTPnFNJi5fD2OUe2+Myi4nsLiwLjbmkI6jt+BhQcC2p910S6ctVgYv8KgqrRYxPdV3bX2VSjieow92+ayG+3pdNsy3XsNj9BukuZyhfmh975A0VSecap/jY4mwFBPloh1jpF8O/7J/ZcF970CIJhoTBUsGgxClgNJLbmqbOooTWsxwlqa/Jqhy6+EVNn5mGzkusrXjrEZvULI+SJkpWIo4lNKbeiRyMmb2rTORcpGHvE5wwFEzrK6W/03QirSQ509qWhrTobtuqhAulxTwxiU0F4bO6sD/xp0TU6gUoyEWazftQIDAQABAoIBADXXuufyE0B9Qy39J/p51x4jBXcRjYzjeSYAPFMgdgpcyF1NHUy7OhpTj17QW+9iQ9x4FQmQ6OFQM2MOAnnFb+gZxM6LNtIOa70iHiC0mQKWOrrqDE3PsuCvj+Qcjl7mhVuwDhHWA2WM5yRio97A9bXFEDDDcqZpnV+M62www3M0C27/cLdXTY4697d/TcSXUEmdRhMBTQsj2LPTB2wuk3ujJqt0ArucUncnteC8hGPvzfz0RfYuYbnAqswiLIYDeWromIL3Rmk+8MNnN5WMUbUcHRTHFptjl4lIj8guUbXiUIY8roeuZ2PLzT7IGbbIAMpKg7WnAr4r5KFWwYN3B/MCgYEA/a0JkpMY33xbeONN/himCkRXtkrRIjG+/NpO1SmcTMhxKsfwYu5TWY2e+3dBeDm3GW0CxWXXYd8hQOcD4RXvLY/SvIcTuU0FjgjINzu/2iLAw3CyhlcYQQr5eF1ZkSR6NKYVTHGE0p8aHhNCIFIjJk9cf7gfo/idiH2v/NXRmjcCgYEA8DIGsAH2nn/cjQ5f2RGqgAWYgsqxZ5VMtdCi6xCSePJfTR/5su9efzVTRTHwL3JsF+jiLT1q1aMwNchz+XPKlF6dtD+q//ocLKjciTb+cndShU5afRHigKAx7bJkEdd6Q3YCrDxV7YUu3o2q++yrdlIr3Fj1yDh3Msyk4Owvr3MCgYEAyWfWHtK9P8sbUPqflKt7QNGMFkaGjrCSY2zshB+aYfgOqZm+yL1R3dssK5k+mLayIfTD63f1Llaar037bX0dvb3f4iEYztlRHLjqRbghlY5cH4/dnf2OWy3cbe0nzK36fMyUQnIqs5LwiIpfyQuNrr/5v8mvDV+5q4Gm9YXJ+bcCgYBAJxxiJiQYcU4W3p/6+hzv1I7HYBvB7r5uUSsyXVrBsvqBPukSQZybnUKAWLYt9gGo4SqHqr++D7fwpXlURvj0Z9D3M4oYlFSyGOfOPkH3kKcZs7O3c+9rK14qflr76PFe00Yjenn41nmON4hTgQLKt2e/koMS1wH/L2laKbsSwQKBgBmafvt4q4jmqZIjjm/Fv/SDq+y+dmp+4JuIilHc7oZu6ZQS1NMsZdK+cnp/MF/1yRd0HWWZorTHwMO20DhZ5LobLyqKBLCZjGyqqFVIG+aeVMKFHbobAp6i5JxSm9isyFWv/gvhVo4feuqabR3m7PMiZrv5YTKzS2ua+LzlTzaz
+          saml_force_name_id_format: "false"
+          saml_name_id_format: username
+          saml_signature_canonicalization_method: http://www.w3.org/2001/10/xml-exc-c14n#
+        authenticationFlowBindingOverrides: {}
+        baseUrl: ""
+        bearerOnly: false
+        clientAuthenticatorType: client-secret
+        clientId: sonarqube-prod
+        consentRequired: false
+        defaultClientScopes: []
+        description: ""
+        directAccessGrantsEnabled: true
+        enabled: true
+        frontchannelLogout: true
+        fullScopeAllowed: true
+        id: bebb5eee-393b-4090-b0f3-c898cfeb886a
+        implicitFlowEnabled: false
+        name: SonarQube Client
+        nodeReRegistrationTimeout: -1
+        notBefore: 0
+        optionalClientScopes: []
+        protocol: saml
+        protocolMappers:
+          - config:
+              attribute.name: name
+              attribute.nameformat: Basic
+              user.attribute: username
+            consentRequired: false
+            id: 3996129d-06b1-4da6-a460-f39cae37ec8a
+            name: Name
+            protocol: saml
+            protocolMapper: saml-user-property-mapper
+          - config:
+              attribute.name: groups
+              attribute.nameformat: Basic
+              full.path: "false"
+              single: "true"
+            consentRequired: false
+            id: 6ca47e27-3315-4658-84e7-50eb2644e1d3
+            name: Groups
+            protocol: saml
+            protocolMapper: saml-group-membership-mapper
+          - config:
+              attribute.name: login
+              attribute.nameformat: Basic
+              user.attribute: username
+            consentRequired: false
+            id: 748f8533-2516-4a77-a4b7-f2fafd43553d
+            name: Login
+            protocol: saml
+            protocolMapper: saml-user-property-mapper
+          - config:
+              attribute.name: email
+              attribute.nameformat: Basic
+              user.attribute: pkiEmail
+            consentRequired: false
+            id: 7f5b67a4-b176-4c51-9bee-0c6dc62da110
+            name: Email
+            protocol: saml
+            protocolMapper: saml-user-attribute-mapper
+        publicClient: true
+        redirectUris:
+          - /oauth2/callback/*
+        rootUrl: https://sonarqube.localhost
+        serviceAccountsEnabled: false
+        standardFlowEnabled: true
+        surrogateAuthRequired: false
+        webOrigins: []
+      - adminUrl: ""
+        alwaysDisplayInConsole: false
+        attributes:
+          backchannel.logout.revoke.offline.tokens: "false"
+          backchannel.logout.session.required: "true"
+          client.secret.creation.time: "1685294663"
+          display.on.consent.screen: "false"
+          oauth2.device.authorization.grant.enabled: "false"
+          oidc.ciba.grant.enabled: "false"
+          post.logout.redirect.uris: /external_logout_complete.do
+          realm_client: "false"
+        authenticationFlowBindingOverrides: {}
+        baseUrl: ""
+        bearerOnly: false
+        clientAuthenticatorType: client-secret
+        clientId: svcnow-test
+        consentRequired: false
+        defaultClientScopes:
+          - web-origins
+          - acr
+          - profile
+          - roles
+          - basic
+          - email
+        description: ""
+        directAccessGrantsEnabled: false
+        enabled: true
+        frontchannelLogout: true
+        fullScopeAllowed: true
+        id: 10914ac1-388f-44ac-98f3-153f3323da1f
+        implicitFlowEnabled: false
+        name: ServiceNow Test Client
+        nodeReRegistrationTimeout: -1
+        notBefore: 0
+        optionalClientScopes:
+          - tenants
+          - address
+          - phone
+          - offline_access
+          - internal_groups
+          - microprofile-jwt
+        protocol: openid-connect
+        protocolMappers:
+          - config:
+              access.token.claim: "true"
+              claim.name: clientId
+              id.token.claim: "true"
+              jsonType.label: String
+              user.session.note: clientId
+              userinfo.token.claim: "true"
+            consentRequired: false
+            id: c7260c77-8191-4c27-8348-d85f721b89ed
+            name: Client ID
+            protocol: openid-connect
+            protocolMapper: oidc-usersessionmodel-note-mapper
+          - config:
+              access.token.claim: "true"
+              claim.name: clientHost
+              id.token.claim: "true"
+              jsonType.label: String
+              user.session.note: clientHost
+              userinfo.token.claim: "true"
+            consentRequired: false
+            id: 9178fdcb-83cd-43e6-9edc-2f4c6bfe9d98
+            name: Client Host
+            protocol: openid-connect
+            protocolMapper: oidc-usersessionmodel-note-mapper
+          - config:
+              access.token.claim: "true"
+              claim.name: clientAddress
+              id.token.claim: "true"
+              jsonType.label: String
+              user.session.note: clientAddress
+              userinfo.token.claim: "true"
+            consentRequired: false
+            id: 84ad9318-7a10-454e-9d9d-4ed814275f1d
+            name: Client IP Address
+            protocol: openid-connect
+            protocolMapper: oidc-usersessionmodel-note-mapper
+        publicClient: false
+        redirectUris:
+          - https://localhost:8443/authentication/callback
+          - https://dev250671.service-now.com/navpage.do
+          - https://oauth.pstmn.io/v1/callback
+        rootUrl: https://dev250671.service-now.com
+        secret: I9UunS1g6YMcOVSO47uOVpkijGynXl8M
+        serviceAccountsEnabled: true
+        standardFlowEnabled: true
+        surrogateAuthRequired: false
+        webOrigins:
+          - https://dev250671.service-now.com
+          - https://localhost:8443
+          - https://oauth.pstmn.io
+      - adminUrl: https://vault.localhost
+        alwaysDisplayInConsole: false
+        attributes:
+          backchannel.logout.revoke.offline.tokens: "false"
+          backchannel.logout.session.required: "true"
+          client.secret.creation.time: "1735710805"
+          display.on.consent.screen: "false"
+          oauth2.device.authorization.grant.enabled: "false"
+          oidc.ciba.grant.enabled: "false"
+          post.logout.redirect.uris: +
+          realm_client: "false"
+        authenticationFlowBindingOverrides: {}
+        baseUrl: ""
+        bearerOnly: false
+        clientAuthenticatorType: client-secret
+        clientId: vault-prod
+        consentRequired: false
+        defaultClientScopes:
+          - web-origins
+          - acr
+          - profile
+          - roles
+          - basic
+          - email
+        description: ""
+        directAccessGrantsEnabled: true
+        enabled: true
+        frontchannelLogout: true
+        fullScopeAllowed: true
+        id: 5d01c3da-9bbc-4db9-9d6d-7fe5e632c003
+        implicitFlowEnabled: false
+        name: Vault Client
+        nodeReRegistrationTimeout: -1
+        notBefore: 0
+        optionalClientScopes:
+          - tenants
+          - address
+          - phone
+          - offline_access
+          - internal_groups
+          - groups
+          - microprofile-jwt
+        protocol: openid-connect
+        publicClient: false
+        redirectUris:
+          - /ui/vault/auth/oidc/oidc/callback
+        rootUrl: https://vault.localhost
+        secret: l2FLwizbuasxP2OaxXqPeBwCkyOZ4ux2
+        serviceAccountsEnabled: false
+        standardFlowEnabled: true
+        surrogateAuthRequired: false
+        webOrigins:
+          - https://vault.localhost
     components:
       org.keycloak.keys.KeyProvider:
         - config:
