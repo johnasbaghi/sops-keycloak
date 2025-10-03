@@ -1241,7 +1241,7 @@ spec:
         standardFlowEnabled: false
         surrogateAuthRequired: false
         webOrigins: []
-      - adminUrl: https://argocd.localhost
+      - adminUrl: https://argocd.orlandotorres.dev
         alwaysDisplayInConsole: false
         attributes:
           backchannel.logout.revoke.offline.tokens: "false"
@@ -1286,14 +1286,14 @@ spec:
         publicClient: false
         redirectUris:
           - /auth/callback
-        rootUrl: https://argocd.localhost
+        rootUrl: https://argocd.orlandotorres.dev
         secret: Trib33Jjp0r8tQS1NCkpY1YQMaISVlJC
         serviceAccountsEnabled: false
         standardFlowEnabled: true
         surrogateAuthRequired: false
         webOrigins:
-          - https://argocd.localhost
-      - adminUrl: https://argo-workflows.localhost
+          - https://argocd.orlandotorres.dev
+      - adminUrl: https://argo-workflows.orlandotorres.dev
         alwaysDisplayInConsole: false
         attributes:
           backchannel.logout.revoke.offline.tokens: "false"
@@ -1339,13 +1339,13 @@ spec:
         publicClient: false
         redirectUris:
           - /oauth2/callback
-        rootUrl: https://argo-workflows.localhost
+        rootUrl: https://argo-workflows.orlandotorres.dev
         secret: DnbqWVVvIL8OJJ6zicWLIQikuVJy529t
         serviceAccountsEnabled: false
         standardFlowEnabled: true
         surrogateAuthRequired: false
         webOrigins:
-          - https://argo-workflows.localhost
+          - https://argo-workflows.orlandotorres.dev
       - alwaysDisplayInConsole: false
         attributes:
           post.logout.redirect.uris: +
@@ -1382,7 +1382,7 @@ spec:
         standardFlowEnabled: true
         surrogateAuthRequired: false
         webOrigins: []
-      - adminUrl: https://grafana.localhost
+      - adminUrl: https://grafana.orlandotorres.dev
         alwaysDisplayInConsole: false
         attributes:
           backchannel.logout.revoke.offline.tokens: "false"
@@ -1443,14 +1443,14 @@ spec:
         publicClient: false
         redirectUris:
           - /login/generic_oauth
-        rootUrl: https://grafana.localhost
+        rootUrl: https://grafana.orlandotorres.dev
         secret: pvXlCpL1NyvaslgzBCrWHhmLpcSTcGNp
         serviceAccountsEnabled: false
         standardFlowEnabled: true
         surrogateAuthRequired: false
         webOrigins:
-          - https://grafana.localhost
-      - adminUrl: https://harbor.localhost
+          - https://grafana.orlandotorres.dev
+      - adminUrl: https://sops-harbor.orlandotorres.dev
         alwaysDisplayInConsole: false
         attributes:
           backchannel.logout.revoke.offline.tokens: "false"
@@ -1496,14 +1496,14 @@ spec:
         publicClient: false
         redirectUris:
           - /c/oidc/callback
-        rootUrl: https://harbor.localhost
+        rootUrl: https://sops-harbor.orlandotorres.dev
         secret: srZggUINXojKLIdx34s0FX2Z8UpQQWNC
         serviceAccountsEnabled: false
         standardFlowEnabled: true
         surrogateAuthRequired: false
         webOrigins:
-          - https://harbor.localhost
-      - adminUrl: https://illumina.localhost
+          - https://sops-harbor.orlandotorres.dev
+      - adminUrl: https://illumina.orlandotorres.dev
         alwaysDisplayInConsole: false
         attributes:
           backchannel.logout.revoke.offline.tokens: "false"
@@ -1547,13 +1547,13 @@ spec:
         publicClient: true
         redirectUris:
           - /api/auth/callback/keycloak
-        rootUrl: https://illumina.localhost
+        rootUrl: https://illumina.orlandotorres.dev
         serviceAccountsEnabled: false
         standardFlowEnabled: true
         surrogateAuthRequired: false
         webOrigins:
-          - https://illumina.localhost
-      - adminUrl: https://minio.localhost
+          - https://illumina.orlandotorres.dev
+      - adminUrl: https://minio.orlandotorres.dev
         alwaysDisplayInConsole: true
         attributes:
           access.token.lifespan: "3600"
@@ -1608,14 +1608,14 @@ spec:
         publicClient: false
         redirectUris:
           - /oauth_callback
-        rootUrl: https://minio.localhost
+        rootUrl: https://minio.orlandotorres.dev
         secret: zH9XPCHqjnzxME7IQRNmWK14u7qTIPVs
         serviceAccountsEnabled: false
         standardFlowEnabled: true
         surrogateAuthRequired: false
         webOrigins:
-          - https://minio.localhost
-      - adminUrl: https://open-webui.localhost
+          - https://minio.orlandotorres.dev
+      - adminUrl: https://open-webui.orlandotorres.dev
         alwaysDisplayInConsole: false
         attributes:
           backchannel.logout.revoke.offline.tokens: "false"
@@ -1677,13 +1677,13 @@ spec:
         publicClient: false
         redirectUris:
           - /oauth/oidc/callback
-        rootUrl: https://open-webui.localhost
+        rootUrl: https://open-webui.orlandotorres.dev
         secret: jaiDXffHVy1g0s6VG7OOApodVj1vRmaE
         serviceAccountsEnabled: false
         standardFlowEnabled: true
         surrogateAuthRequired: false
         webOrigins: []
-      - adminUrl: https://outline.localhost
+      - adminUrl: https://outline.orlandotorres.dev
         alwaysDisplayInConsole: false
         attributes:
           backchannel.logout.revoke.offline.tokens: "false"
@@ -1728,13 +1728,13 @@ spec:
         publicClient: false
         redirectUris:
           - /auth/oidc.callback
-        rootUrl: https://outline.localhost
+        rootUrl: https://outline.orlandotorres.dev
         secret: sypgwZpJbbD8stJ5yCBu7WHzr3hSrtlT
         serviceAccountsEnabled: false
         standardFlowEnabled: true
         surrogateAuthRequired: false
         webOrigins:
-          - https://outline.localhost
+          - https://outline.orlandotorres.dev
       - alwaysDisplayInConsole: false
         attributes:
           post.logout.redirect.uris: +
@@ -1910,7 +1910,7 @@ spec:
         publicClient: true
         redirectUris:
           - /oauth2/callback/*
-        rootUrl: https://sonarqube.localhost
+        rootUrl: https://sonarqube.orlandotorres.dev
         serviceAccountsEnabled: false
         standardFlowEnabled: true
         surrogateAuthRequired: false
@@ -2008,7 +2008,7 @@ spec:
           - https://dev250671.service-now.com
           - https://localhost:8443
           - https://oauth.pstmn.io
-      - adminUrl: https://vault.localhost
+      - adminUrl: https://vault.orlandotorres.dev
         alwaysDisplayInConsole: false
         attributes:
           backchannel.logout.revoke.offline.tokens: "false"
@@ -2054,13 +2054,13 @@ spec:
         publicClient: false
         redirectUris:
           - /ui/vault/auth/oidc/oidc/callback
-        rootUrl: https://vault.localhost
+        rootUrl: https://vault.orlandotorres.dev
         secret: l2FLwizbuasxP2OaxXqPeBwCkyOZ4ux2
         serviceAccountsEnabled: false
         standardFlowEnabled: true
         surrogateAuthRequired: false
         webOrigins:
-          - https://vault.localhost
+          - https://vault.orlandotorres.dev
     components:
       org.keycloak.keys.KeyProvider:
         - config:
