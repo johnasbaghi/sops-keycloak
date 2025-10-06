@@ -32,6 +32,7 @@ spec:
       clientOfflineSessionMaxLifespan: "0"
       clientSessionIdleTimeout: "0"
       clientSessionMaxLifespan: "0"
+      darkMode: "true"
       oauth2DeviceCodeLifespan: "600"
       oauth2DevicePollingInterval: "5"
       parRequestUriLifespan: "60"
@@ -412,6 +413,95 @@ spec:
         id: c43f227f-90a6-4ef9-badb-d9421050737a
         providerId: basic-flow
         topLevel: true
+      - alias: sops x509 browser
+        authenticationExecutions:
+          - authenticator: auth-cookie
+            authenticatorFlow: false
+            autheticatorFlow: false
+            priority: 10
+            requirement: ALTERNATIVE
+            userSetupAllowed: false
+          - authenticator: auth-spnego
+            authenticatorFlow: false
+            autheticatorFlow: false
+            priority: 20
+            requirement: DISABLED
+            userSetupAllowed: false
+          - authenticator: identity-provider-redirector
+            authenticatorFlow: false
+            autheticatorFlow: false
+            priority: 25
+            requirement: ALTERNATIVE
+            userSetupAllowed: false
+          - authenticatorFlow: true
+            autheticatorFlow: true
+            flowAlias: sops x509 browser irongate
+            priority: 30
+            requirement: ALTERNATIVE
+            userSetupAllowed: false
+          - authenticatorFlow: true
+            autheticatorFlow: true
+            flowAlias: sops x509 browser forms
+            priority: 31
+            requirement: ALTERNATIVE
+            userSetupAllowed: false
+        builtIn: false
+        description: browser based authentication
+        id: 5abdd850-b7e4-4a71-9b99-11ab346ca93b
+        providerId: basic-flow
+        topLevel: true
+      - alias: sops x509 browser Browser - Conditional OTP
+        authenticationExecutions:
+          - authenticator: conditional-user-configured
+            authenticatorFlow: false
+            autheticatorFlow: false
+            priority: 10
+            requirement: REQUIRED
+            userSetupAllowed: false
+          - authenticator: auth-otp-form
+            authenticatorFlow: false
+            autheticatorFlow: false
+            priority: 20
+            requirement: REQUIRED
+            userSetupAllowed: false
+        builtIn: false
+        description: Flow to determine if the OTP is required for the authentication
+        id: 13eec8d6-3f18-4e9d-943f-496d75500cab
+        providerId: basic-flow
+        topLevel: false
+      - alias: sops x509 browser forms
+        authenticationExecutions:
+          - authenticator: auth-username-password-form
+            authenticatorFlow: false
+            autheticatorFlow: false
+            priority: 10
+            requirement: REQUIRED
+            userSetupAllowed: false
+          - authenticatorFlow: true
+            autheticatorFlow: true
+            flowAlias: sops x509 browser Browser - Conditional OTP
+            priority: 20
+            requirement: CONDITIONAL
+            userSetupAllowed: false
+        builtIn: false
+        description: Username, password, otp and other auth forms.
+        id: 22a5f0f2-49cb-496d-a937-a3dcb44f3795
+        providerId: basic-flow
+        topLevel: false
+      - alias: sops x509 browser irongate
+        authenticationExecutions:
+          - authenticator: auth-x509-client-username-form
+            authenticatorConfig: sops-x509-browser-form
+            authenticatorFlow: false
+            autheticatorFlow: false
+            priority: 0
+            requirement: REQUIRED
+            userSetupAllowed: false
+        builtIn: false
+        description: ""
+        id: f24457e2-a3e2-4f63-8262-9467596f8bb2
+        providerId: basic-flow
+        topLevel: false
       - alias: x509 browser
         authenticationExecutions:
           - authenticator: auth-cookie
@@ -522,6 +612,19 @@ spec:
         config:
           update.profile.on.first.login: missing
         id: ac88f370-87e8-4e75-9f22-6ef7b426aadd
+      - alias: sops-x509-browser-form
+        config:
+          x509-cert-auth.canonical-dn-enabled: "false"
+          x509-cert-auth.certificate-policy-mode: All
+          x509-cert-auth.confirmation-page-disallowed: "true"
+          x509-cert-auth.crldp-checking-enabled: "false"
+          x509-cert-auth.mapper-selection: Username or Email
+          x509-cert-auth.mapping-source-selection: Subject's Common Name
+          x509-cert-auth.ocsp-fail-open: "false"
+          x509-cert-auth.regular-expression: (.*?)(?:$)
+          x509-cert-auth.serialnumber-hex-enabled: "false"
+          x509-cert-auth.timestamp-validation-enabled: "false"
+        id: 67415900-e252-4b79-aee8-2b8e38be7164
       - alias: x509-browser-form
         config:
           x509-cert-auth.canonical-dn-enabled: "false"
@@ -538,7 +641,7 @@ spec:
           x509-cert-auth.serialnumber-hex-enabled: "false"
           x509-cert-auth.timestamp-validation-enabled: "false"
         id: 8aceffd4-f909-4da6-9e7c-ae4b0f2519e6
-    browserFlow: x509 browser
+    browserFlow: sops x509 browser
     browserSecurityHeaders:
       contentSecurityPolicy: frame-src 'self'; frame-ancestors 'self'; object-src 'none';
       contentSecurityPolicyReportOnly: ""
@@ -2320,13 +2423,21 @@ spec:
       - jboss-logging
     failureFactor: 30
     firstBrokerLoginFlow: first broker login
+    groups:
+      - attributes: {}
+        clientRoles: {}
+        id: 1b7e59d6-1038-42e5-a725-b3677dd37dfe
+        name: Harbor Admins
+        path: /Harbor Admins
+        realmRoles: []
+        subGroups: []
     id: 5f81d036-8138-4174-bf42-48cd97e58824
     identityProviderMappers: []
     identityProviders: []
     internationalizationEnabled: false
     keycloakVersion: 26.1.0
     localizationTexts: {}
-    loginTheme: irongate
+    loginTheme: keycloak.v2
     loginWithEmailAllowed: true
     maxDeltaTimeSeconds: 43200
     maxFailureWaitSeconds: 900
