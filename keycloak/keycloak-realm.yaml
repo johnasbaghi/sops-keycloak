@@ -4,6 +4,11 @@ metadata:
   name: dev-test-realm
 spec:
   keycloakCRName: keycloak
+  placeholders:
+    ENV_KEY:
+      secret:
+        name: sops-keycloak-harbor-client-secret
+        key: client-secret
   realm:
     accessCodeLifespan: 60
     accessCodeLifespanLogin: 1800
@@ -1497,7 +1502,7 @@ spec:
         redirectUris:
           - /c/oidc/callback
         rootUrl: https://sops-harbor.orlandotorres.dev
-        secret: srZggUINXojKLIdx34s0FX2Z8UpQQWNC
+        secret: "${ENV_KEY}"
         serviceAccountsEnabled: false
         standardFlowEnabled: true
         surrogateAuthRequired: false
