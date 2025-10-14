@@ -54,7 +54,9 @@ spec:
           internalTLS:
             enabled: false
           jobservice:
-            secret: Bv2VLuVLjZkHvuhv
+            existingSecret: sops-harbor-jobservice
+            existingSecretKey: secret
+            # secret: Bv2VLuVLjZkHvuhv
           persistence:
             imageChartStorage:
               disableredirect: true
