@@ -34,8 +34,8 @@ spec:
                 #     "oidc_user_claim": "preferred_username",
                 #     "oidc_verify_cert": "false"
                 #   }
-            # Secret is used when core server communicates with other components.
-            # If a secret key is not specified, Helm will generate one.
+            # If using existingSecret, the key must be secret
+            existingSecret: "sops-harbor-core"
             # secret: ruoZoWjiB19rIjhk
             secretName: harbor-token-tls
             existingXsrfSecret: sops-harbor-xsrf
