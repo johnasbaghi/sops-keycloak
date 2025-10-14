@@ -35,7 +35,7 @@ spec:
                 #     "oidc_verify_cert": "false"
                 #   }
             # If using existingSecret, the key must be secret
-            existingSecret: "sops-harbor-core"
+            existingSecret: "sops-harbor-core2"
             # secret: ruoZoWjiB19rIjhk
             secretName: harbor-token-tls
             existingXsrfSecret: sops-harbor-xsrf
