@@ -38,7 +38,8 @@ spec:
             # If a secret key is not specified, Helm will generate one.
             # secret: ruoZoWjiB19rIjhk
             secretName: harbor-token-tls
-            # The XSRF key will be generated automatically if it isn't specified
+            existingXsrfSecret: sops-harbor-xsrf
+            existingXsrfSecretKey: CSRF_KEY
             # xsrfKey: o99bqtKEOOP7w7pjIbgapQitV2E2ZHa2
           expose:
             ingress:
