@@ -54,7 +54,7 @@ spec:
           internalTLS:
             enabled: false
           jobservice:
-            existingSecret: sops-harbor-jobservice
+            existingSecret: sops-harbor-jobservice2
             existingSecretKey: JOBSERVICE_SECRET
             # secret: Bv2VLuVLjZkHvuhv
           persistence:
