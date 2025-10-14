@@ -51,7 +51,9 @@ spec:
               enabled: true
             type: ingress
           externalURL: https://sops-harbor.orlandotorres.dev
-          harborAdminPassword: changeme
+          existingSecretAdminPassword: "sops-harbor-admin-password"
+          existingSecretAdminPasswordKey: HARBOR_ADMIN_PASSWORD
+          # harborAdminPassword: changeme
           internalTLS:
             enabled: false
           jobservice:
