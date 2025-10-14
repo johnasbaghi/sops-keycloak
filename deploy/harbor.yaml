@@ -36,7 +36,8 @@ spec:
                 #   }
             secret: ruoZoWjiB19rIjhk
             secretName: harbor-token-tls
-            xsrfKey: o99bqtKEOOP7w7pjIbgapQitV2E2ZHa2
+            # The XSRF key will be generated automatically if it isn't specified
+            # xsrfKey: o99bqtKEOOP7w7pjIbgapQitV2E2ZHa2
           expose:
             ingress:
               className: nginx
