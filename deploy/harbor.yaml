@@ -70,7 +70,8 @@ spec:
               type: s3
           registry:
             credentials:
-              htpasswdString: harbor_registry_user:$2a$10$RpxCLSBuo/py.8BxU3sXoezNBZF8oT.ZTsUpJ6KxZXPnHhMV7WEEK
+              existingSecret: sops-harbor-credentials
+              # htpasswdString: harbor_registry_user:$2a$10$RpxCLSBuo/py.8BxU3sXoezNBZF8oT.ZTsUpJ6KxZXPnHhMV7WEEK
             secret: U5P8BVEwsJVArMlz
       repoURL: https://helm.goharbor.io
       targetRevision: 1.15.1
