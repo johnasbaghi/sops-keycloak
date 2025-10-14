@@ -55,7 +55,7 @@ spec:
             enabled: false
           jobservice:
             existingSecret: sops-harbor-jobservice
-            existingSecretKey: secret
+            existingSecretKey: JOBSERVICE_SECRET
             # secret: Bv2VLuVLjZkHvuhv
           persistence:
             imageChartStorage:
