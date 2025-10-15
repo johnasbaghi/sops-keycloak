@@ -1,0 +1,62 @@
+** Keycloak
+*** ENV_KEY
+KeycloakRealmImport has "built-in support" for referencing existing
+secrets using placeholders.
+https://www.keycloak.org/operator/realm-import
+
+#+begin_src yaml
+apiVersion: k8s.keycloak.org/v2alpha1
+kind: KeycloakRealmImport
+metadata:
+  name: dev-test-realm
+spec:
+  keycloakCRName: keycloak
+  placeholders:
+    ENV_KEY:
+      secret:
+        name: sops-keycloak-harbor-client-secret
+        key: client-secret
+  realm:
+    accessCodeLifespan: 60
+    accessCodeLifespanLogin: 1800
+.
+.
+.
+        rootUrl: https://sops-harbor.orlandotorres.dev
+        secret: "${ENV_KEY}"
+.
+.
+.
+#+end_src
+
+In the above example, the placeholder replacement will be enabled and
+an environment variable with key ENV_KEY will be created from the
+Secret sops-keycloak-harbor-client-secret value for key
+`SECRET_KEY. Note: Secrets must be in the same namespace as the
+Keycloak CR.
+
+In addition to harbor-prod, we will have to create a Secret for each
+of the remaining client secrets:
+- +clientId: harbor-prod+
+- clientId: account
+- clientId: account-console
+- clientId: admin-cli
+- clientId: argocd-prod
+- clientId: argo-prod
+- clientId: broker
+- clientId: grafana-prod
+- clientId: illumina-prod
+- clientId: minio-prod
+- clientId: open-webui-prod
+- clientId: outline-prod
+- clientId: realm-management
+- clientId: security-admin-console
+- clientId: sonarqube-prod
+- clientId: svcnow-test
+- clientId: vault-prod
+
+We'll have to create the same Secret in the namespace of the clients
+that authenticate with Keycloak.
+
+This is new to 26.0.
+

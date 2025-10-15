@@ -17,30 +17,17 @@ spec:
           core:
             extraEnvVars:
               - name: CONFIG_OVERWRITE_JSON
+                # Note: Replaced value with valueFrom.
                 valueFrom:
                   secretKeyRef:
                     name: sops-harbor-config # name of your already created secret
                     key: CONFIG_OVERWRITE_JSON
-                # value: |-
-                #   {
-                #     "oidc_admin_group": "Harbor Admins",
-                #     "oidc_auto_onboard": "true",
-                #     "oidc_client_id": "harbor-prod",
-                #     "oidc_client_secret": "srZggUINXojKLIdx34s0FX2Z8UpQQWNC",
-                #     "oidc_endpoint": "https://sops-auth.orlandotorres.dev/realms/dev-test",
-                #     "oidc_groups_claim": "groups",
-                #     "oidc_name": "Keycloak",
-                #     "oidc_scope": "openid,groups,offline_access",
-                #     "oidc_user_claim": "preferred_username",
-                #     "oidc_verify_cert": "false"
-                #   }
-            # If using existingSecret, the key must be secret
+            # Note: Replaced secret with existingSecret. "If using existingSecret, the key must be secret."
             existingSecret: "sops-harbor-core2"
-            # secret: ruoZoWjiB19rIjhk
             secretName: harbor-token-tls
             existingXsrfSecret: sops-harbor-xsrf
             existingXsrfSecretKey: CSRF_KEY
-            # xsrfKey: o99bqtKEOOP7w7pjIbgapQitV2E2ZHa2
+            # Note: Replaced xsrfKey with existingXsrfSecret and existingXsrfSecretKey.
           expose:
             ingress:
               className: nginx
@@ -51,15 +38,15 @@ spec:
               enabled: true
             type: ingress
           externalURL: https://sops-harbor.orlandotorres.dev
+          # Note: Replaced harborAdminPassword with existingSecretAdminPassword and existingSecretAdminPasswordKey.
           existingSecretAdminPassword: "sops-harbor-admin-password"
           existingSecretAdminPasswordKey: HARBOR_ADMIN_PASSWORD
-          # harborAdminPassword: changeme
           internalTLS:
             enabled: false
           jobservice:
+            # Note: Replaced secret with existingSecret and existingSecretKey.
             existingSecret: sops-harbor-jobservice2
             existingSecretKey: JOBSERVICE_SECRET
-            # secret: Bv2VLuVLjZkHvuhv
           persistence:
             imageChartStorage:
               disableredirect: true
@@ -73,12 +60,15 @@ spec:
               type: s3
           registry:
             credentials:
+              # Note: Replaced htpasswdString with existingSecret.
               existingSecret: sops-harbor-credentials
-              # htpasswdString: harbor_registry_user:$2a$10$RpxCLSBuo/py.8BxU3sXoezNBZF8oT.ZTsUpJ6KxZXPnHhMV7WEEK
             secret: U5P8BVEwsJVArMlz
       repoURL: https://helm.goharbor.io
       targetRevision: 1.15.1
     - path: harbor
+      repoURL: https://github.com/johnasbaghi/sops-keycloak
+      targetRevision: HEAD
+    - path: secrets/harbor
       repoURL: https://github.com/johnasbaghi/sops-keycloak
       targetRevision: HEAD
   syncPolicy:
