@@ -4,6 +4,7 @@ metadata:
   name: dev-test-realm
 spec:
   keycloakCRName: keycloak
+  # Note: placeholder for harbor-prod client secret.
   placeholders:
     ENV_KEY:
       secret:
@@ -1605,6 +1606,7 @@ spec:
         redirectUris:
           - /c/oidc/callback
         rootUrl: https://sops-harbor.orlandotorres.dev
+        # Note: Replace hardcoded secret for harbor-prod with a placeholder.
         secret: "${ENV_KEY}"
         serviceAccountsEnabled: false
         standardFlowEnabled: true

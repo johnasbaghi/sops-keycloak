@@ -1,5 +1,6 @@
 ** Keycloak
 *** ENV_KEY
+
 KeycloakRealmImport has "built-in support" for referencing existing
 secrets using placeholders.
 https://www.keycloak.org/operator/realm-import
@@ -60,3 +61,163 @@ that authenticate with Keycloak.
 
 This is new to 26.0.
 
+** Harbor
+*** CONFIG_OVERWRITE_JSON
+
+The CONFIG_OVERWRITE_JSON environment variable that's used in Harbor's
+core container, you can have it reference a Kubernetes Secret:
+
+#+begin_src yaml
+# ...
+  core:
+    extraEnvVars:
+    - name: CONFIG_OVERWRITE_JSON
+      valueFrom:
+        secretKeyRef:
+          name: harbor-config # name of your already created secret
+          key: CONFIG_OVERWRITE_JSON
+# ...
+
+apiVersion: v1
+kind: SealedSecret
+metadata:
+  name: harbor-config
+type: Opaque
+data:
+  CONFIG_OVERWRITE_JSON: {"auth_mode":"oidc_auth","oidc_auto_onboard":"true","oidc_endpoint":"https://example.com/oidc/$
+#+end_src
+
+Source:
+https://github.com/goharbor/harbor-helm/issues/1021#issuecomment-2516792029
+https://artifacthub.io/packages/helm/harbor/harbor?modal=values&path=core.extraEnvVars
+
+*** core.xsrfKey
+
+This field sets the XSRF (Cross-Site Request Forgery) key for the
+Harbor core service.
+
+#+begin_src yaml
+# If using existingSecret, the key is defined by core.existingXsrfSecretKey
+existingXsrfSecret: ""
+# If using existingSecret, the key
+existingXsrfSecretKey: CSRF_KEY
+#+end_src
+
+Default Value: Empty string (""). If not specified, the Helm chart
+automatically generates a random 32-character string during
+deployment.
+
+Requirement: If you provide a custom value, it must be exactly 32
+characters long. Shorter or longer keys will cause validation errors
+in the Harbor core runtime (see Harbor PR #21154 for details).
+
+Usage: The value is injected into the Harbor core configuration (e.g.,
+as XSRFKey in app.conf) and stored in a Kubernetes Secret (key:
+CSRF_KEY). It's used for token validation in sessions.
+
+Source:
+https://artifacthub.io/packages/helm/harbor/harbor?modal=values&path=core.xsrfKey
+
+*** core.secret
+
+#+begin_src yaml
+  # Secret is used when core server communicates with other components.
+  # If a secret key is not specified, Helm will generate one. Alternatively set existingSecret to use an existing secre$
+  # Must be a string of 16 chars.
+  secret: ""
+  # Fill in the name of a kubernetes secret if you want to use your own
+  # If using existingSecret, the key must be secret
+  existingSecret: ""
+#+end_src
+
+Source:
+https://artifacthub.io/packages/helm/harbor/harbor?modal=values&path=core.secret
+
+*** adminPassword
+
+#+begin_src yaml
+# The initial password of Harbor admin. Change it from portal after launching Harbor
+# or give an existing secret for it
+# key in secret is given via (default to HARBOR_ADMIN_PASSWORD)
+existingSecretAdminPassword: ""
+existingSecretAdminPasswordKey: HARBOR_ADMIN_PASSWORD
+harborAdminPassword: "Harbor12345"
+#+end_src
+
+This should work given the following secret has already been created:
+
+#+begin_src yaml
+apiVersion: v1
+    kind: Secret
+    metadata:
+      name: harbor-admin-password
+      namespace: harbor
+    type: Opaque
+    stringData:
+      HARBOR_ADMIN_PASSWORD: "password"
+#+end_src
+
+Source:
+https://artifacthub.io/packages/helm/harbor/harbor?modal=values&path=harborAdminPassword
+
+*** jobservice.secret
+
+#+begin_src yaml
+  # Secret is used when job service communicates with other components.
+  # If a secret key is not specified, Helm will generate one.
+  # Must be a string of 16 chars.
+  secret: ""
+  # Use an existing secret resource
+  existingSecret: ""
+  # Key within the existing secret for the job service secret
+  existingSecretKey: JOBSERVICE_SECRET
+#+end_src
+
+Source:
+https://artifacthub.io/packages/helm/harbor/harbor?modal=values&path=jobservice.secret
+
+*** registry.secret and registry.credentials.htpasswdString
+
+For registry.secret and registry.credentials.htpasswdString, the
+documentation says you can use existingSecret for both registry.secret
+and registry.credentials:
+
+#+begin_src yaml
+  # If a secret key is not specified, Helm will generate one.
+  # Must be a string of 16 chars.
+  secret: ""
+  # Use an existing secret resource
+  existingSecret: ""
+  # Key within the existing secret for the registry service secret
+  existingSecretKey: REGISTRY_HTTP_SECRET
+  credentials:
+    username: "harbor_registry_user"
+    password: "harbor_registry_password"
+    # If using existingSecret, the key must be REGISTRY_PASSWD and REGISTRY_HTPASSWD
+    existingSecret: ""
+    # Login and password in htpasswd string format. Excludes `registry.credentials.username`  and `registry.credentials.password`. May come $
+    # htpasswdString: $apr1$XLefHzeG$Xl4.s00sMSCCcMyJljSZb0 # example string
+    htpasswdString: ""
+#+end_src
+
+Create a secret that has REGISTRY_HTPASSWD and REGISTRY_PASSWD keys in it.
+
+REGISTRY_HTPASSWD: Generate htpasswd string using command (use
+harbor_registry_user as a login!!!): htpasswd -nbBC 10
+harbor_registry_user {PASSWORD} Generated password part in htpasswd
+should start with: $2a$
+
+REGISTRY_PASSWD: Plain password which was used in previous step
+
+Remember to check that the registry password in use is not more than 16 characters long.
+
+You have to set REGISTRY_HTPASSWD to the full username:$password string.
+
+# Create the password:
+$ htpasswd -nbBC 10 harbor_registry_user password
+harbor_registry_user:$2y$10$HWJw/42ioAUkA3TyZbsJRut.ure1iPx4TM.MUjB1FTOWQIqTcUCB6
+
+Source:
+https://artifacthub.io/packages/helm/harbor/harbor?modal=values&path=registry.credentials.htpasswdString
+https://github.com/goharbor/harbor-helm/issues/1830#issuecomment-2511209805
+https://github.com/goharbor/harbor-helm/issues/1830#issuecomment-3308514879
