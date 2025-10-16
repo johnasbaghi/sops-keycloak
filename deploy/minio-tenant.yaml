@@ -1,0 +1,256 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "3"
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  name: sops-minio-tenant
+spec:
+  destination:
+    name: in-cluster
+    namespace: sops-minio
+  project: default
+  source:
+    chart: tenant
+    helm:
+      valuesObject:
+        extraResources:
+          - |
+            apiVersion: v1
+            kind: Secret
+            metadata:
+              name: minio-argo-user
+            stringData:
+              CONSOLE_ACCESS_KEY: minio-argo-user
+              CONSOLE_SECRET_KEY: eL6U5S9Zo4K3gHqV18CYe7PpKqijARgZykLfF8q4
+          - |
+            apiVersion: v1
+            kind: Secret
+            metadata:
+              name: minio-harbor-user
+            stringData:
+              CONSOLE_ACCESS_KEY: minio-harbor-user
+              CONSOLE_SECRET_KEY: gnlMdt7AeLMB9KF27akt9seon8hU7yS4EmpGa6f0
+          - |
+            apiVersion: v1
+            kind: Secret
+            metadata:
+              name: minio-infralytics-user
+            stringData:
+              CONSOLE_ACCESS_KEY: minio-infralytics-user
+              CONSOLE_SECRET_KEY: 67z7BQvGJfa7PmSPrHbd7mxfXtMi4zP4P1dh5BBD
+          - |
+            apiVersion: v1
+            kind: Secret
+            metadata:
+              name: minio-loki-user
+            stringData:
+              CONSOLE_ACCESS_KEY: minio-loki-user
+              CONSOLE_SECRET_KEY: PPu3YMJTZPowpQ1dB5eTa7vZI/szAAaUbKH4Uj3i
+          - |
+            apiVersion: v1
+            kind: Secret
+            metadata:
+              name: minio-outline-user
+            stringData:
+              CONSOLE_ACCESS_KEY: minio-outline-user
+              CONSOLE_SECRET_KEY: ARRNn4+mTazTo2fRicr+/U+wLTy/PAAoXR/t/o+I
+          - |
+            apiVersion: batch/v1
+            kind: Job
+            metadata:
+              annotations:
+                argocd.argoproj.io/hook: PostSync
+              name: minio-setup
+            spec:
+              backoffLimit: 0
+              template:
+                spec:
+                  containers:
+                    - args:
+                        - |
+                          source /tmp/config.env
+                          mc alias set myminio "$MINIO_HOST_URL" "$MINIO_ROOT_USER" "$MINIO_ROOT_PASSWORD"
+                          mc anonymous set upload myminio/ingest
+                          mc anonymous set download myminio/public
+
+                          users=(argo harbor infralytics loki outline)
+                          buckets=(workflows registry ingest loki-* outline)
+
+                          for (( i = 0; i < ${#users[@]}; i++ )); do
+                          cat <<EOF >policy.json
+                          {
+                            "Version": "2012-10-17",
+                            "Statement": [
+                              {
+                                "Effect": "Allow",
+                                "Action": ["s3:ListBucket"],
+                                "Resource": ["arn:aws:s3:::${buckets[i]}"]
+                              },
+                              {
+                                "Effect": "Allow",
+                                "Action": ["s3:*"],
+                                "Resource": ["arn:aws:s3:::${buckets[i]}/*"]
+                              }
+                            ]
+                          }
+                          EOF
+
+                          mc admin policy create myminio ${users[i]}-readwrite policy.json
+                          mc admin policy attach myminio ${users[i]}-readwrite --user minio-${users[i]}-user
+                          mc admin policy detach myminio consoleAdmin --user minio-${users[i]}-user
+                          done
+                      command:
+                        - sh
+                        - -c
+                      env:
+                        - name: MINIO_HOST_URL
+                          value: https://sops-s3.orlandotorres.dev
+                      image: quay.io/minio/mc:RELEASE.2024-11-21T17-21-54Z
+                      name: main
+                      volumeMounts:
+                        - mountPath: /tmp/config.env
+                          name: env-config
+                          subPath: config.env
+                  restartPolicy: Never
+                  volumes:
+                    - name: env-config
+                      secret:
+                        secretName: minio-env-config
+        ingress:
+          api:
+            annotations:
+              nginx.ingress.kubernetes.io/proxy-body-size: 250m
+              nginx.ingress.kubernetes.io/proxy-buffering: "off"
+              nginx.ingress.kubernetes.io/proxy-request-buffering: "off"
+              nginx.ingress.kubernetes.io/ssl-redirect: "false"
+            enabled: true
+            host: sops-s3.orlandotorres.dev
+            ingressClassName: nginx
+            path: /
+            pathType: Prefix
+            tls:
+              - hosts:
+                  - '*.orlandotorres.dev'
+          console:
+            annotations:
+              nginx.ingress.kubernetes.io/proxy-body-size: 250m
+              nginx.ingress.kubernetes.io/proxy-buffering: "off"
+              nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+              nginx.ingress.kubernetes.io/proxy-request-buffering: "off"
+              nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
+              nginx.ingress.kubernetes.io/ssl-redirect: "false"
+            enabled: true
+            host: sops-minio.orlandotorres.dev
+            ingressClassName: nginx
+            path: /
+            pathType: Prefix
+            tls:
+              - hosts:
+                  - '*.orlandotorres.dev'
+        secrets: ""
+        tenant:
+          buckets:
+            - name: data
+              objectLock: false
+              region: us-east-1
+            - name: ingest
+              objectLock: false
+              region: us-east-1
+            - name: loki-chunks
+              objectLock: false
+              region: us-east-1
+            - name: loki-ruler
+              objectLock: false
+              region: us-east-1
+            - name: outline
+              objectLock: false
+              region: us-east-1
+            - name: public
+              objectLock: false
+              region: us-east-1
+            - name: registry
+              objectLock: false
+              region: us-east-1
+            - name: workflows
+              objectLock: false
+              region: us-east-1
+          certificate:
+            requestAutoCert: false
+          configSecret:
+            accessKey: minio-tenant-admin
+            name: minio-env-config
+            secretKey: UFcEMFi8HjVx0AIWGhSXm8pC296Chme/k/1tM32K
+          configuration:
+            name: minio-env-config
+          env:
+            - name: MINIO_IDENTITY_OPENID_CONFIG_URL
+              value: https://sops-auth.orlandotorres.dev/realms/dev-test/.well-known/openid-configuration
+            - name: MINIO_IDENTITY_OPENID_CLIENT_ID
+              value: minio-prod
+            - name: MINIO_IDENTITY_OPENID_CLIENT_SECRET
+              value: zH9XPCHqjnzxME7IQRNmWK14u7qTIPVs
+            - name: MINIO_IDENTITY_OPENID_CLAIM_NAME
+              value: policy
+            - name: MINIO_IDENTITY_OPENID_DISPLAY_NAME
+              value: Keycloak
+            - name: MINIO_IDENTITY_OPENID_SCOPES
+              value: openid,profile,email
+            - name: MINIO_IDENTITY_OPENID_CLAIM_USERINFO
+              value: "on"
+            - name: MINIO_IDENTITY_OPENID_VENDOR
+              value: keycloak
+            - name: MINIO_IDENTITY_OPENID_KEYCLOAK_REALM
+              value: dev-test
+            - name: MINIO_IDENTITY_OPENID_KEYCLOAK_ADMIN_URL
+              value: https://sops-keycloak.orlandotorres.dev/admin
+          features:
+            domains:
+              console: https://sops-minio.orlandotorres.dev
+              minio:
+                - https://sops-s3.orlandotorres.dev
+          name: minio-tenant
+          pools:
+            - affinity:
+                podAntiAffinity:
+                  requiredDuringSchedulingIgnoredDuringExecution:
+                    - labelSelector:
+                        matchExpressions:
+                          - key: v1.min.io/pool
+                            operator: In
+                            values:
+                              - pool-0
+                      topologyKey: kubernetes.io/hostname
+              containerSecurityContext:
+                allowPrivilegeEscalation: false
+                capabilities:
+                  drop:
+                    - ALL
+                runAsGroup: 1000
+                runAsNonRoot: true
+                runAsUser: 1000
+                seccompProfile:
+                  type: RuntimeDefault
+              name: pool-0
+              servers: 2
+              size: 25Gi
+              storageClassName: longhorn-local-xfs
+              volumesPerServer: 2
+          users:
+            - name: minio-argo-user
+            - name: minio-harbor-user
+            - name: minio-infralytics-user
+            - name: minio-loki-user
+            - name: minio-outline-user
+    repoURL: https://operator.min.io
+    targetRevision: 6.0.4
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    managedNamespaceMetadata:
+      labels:
+        pod-security.kubernetes.io/enforce: baseline
+    syncOptions:
+      - CreateNamespace=true
