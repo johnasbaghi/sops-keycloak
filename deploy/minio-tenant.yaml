@@ -20,6 +20,14 @@ spec:
             apiVersion: v1
             kind: Secret
             metadata:
+              name: minio-env-config
+            stringData:
+              MINIO_ROOT_USER: minio-tenant-admin
+              MINIO_ROOT_PASSWORD: UFcEMFi8HjVx0AIWGhSXm8pC296Chme/k/1tM32K
+          - |
+            apiVersion: v1
+            kind: Secret
+            metadata:
               name: minio-argo-user
             stringData:
               CONSOLE_ACCESS_KEY: minio-argo-user
@@ -179,9 +187,10 @@ spec:
           certificate:
             requestAutoCert: false
           configSecret:
-            accessKey: minio-tenant-admin
+            existingSecret: true
             name: minio-env-config
-            secretKey: UFcEMFi8HjVx0AIWGhSXm8pC296Chme/k/1tM32K
+            # accessKey: minio-tenant-admin
+            # secretKey: UFcEMFi8HjVx0AIWGhSXm8pC296Chme/k/1tM32K
           configuration:
             name: minio-env-config
           env:
