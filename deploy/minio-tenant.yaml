@@ -21,8 +21,9 @@ spec:
             metadata:
               name: minio-env-config
             stringData:
-              MINIO_ROOT_USER: minio-tenant-admin
-              MINIO_ROOT_PASSWORD: UFcEMFi8HjVx0AIWGhSXm8pC296Chme/k/1tM32K
+              config.env: |-
+                export MINIO_ROOT_USER=minio-tenant-admin
+                export MINIO_ROOT_PASSWORD=UFcEMFi8HjVx0AIWGhSXm8pC296Chme/k/1tM32K
           - |
             apiVersion: v1
             kind: Secret
@@ -185,15 +186,9 @@ spec:
               region: us-east-1
           certificate:
             requestAutoCert: false
-          # Note: Empty accessKey and secretKey are required for this to work. See https://github.com/minio/operator/issues/2328#issuecomment-2415950462
+          # Note: Removed 'configuration' and Replaced configSecret.accessKey and configSecret.secretKey with configSecret.existingSecret.
           configSecret:
             existingSecret: true
-            name: minio-env-config
-            accessKey:
-            secretKey:
-            # accessKey: minio-tenant-admin
-            # secretKey: UFcEMFi8HjVx0AIWGhSXm8pC296Chme/k/1tM32K
-          configuration:
             name: minio-env-config
           env:
             - name: MINIO_IDENTITY_OPENID_CONFIG_URL
@@ -255,7 +250,7 @@ spec:
             - name: minio-loki-user
             - name: minio-outline-user
     repoURL: https://operator.min.io
-    targetRevision: 6.0.4
+    targetRevision: 7.1.1
   syncPolicy:
     automated:
       prune: true
