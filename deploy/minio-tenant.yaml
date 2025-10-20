@@ -185,9 +185,12 @@ spec:
               region: us-east-1
           certificate:
             requestAutoCert: false
+          # Note: Empty accessKey and secretKey are required for this to work. See https://github.com/minio/operator/issues/2328#issuecomment-2415950462
           configSecret:
             existingSecret: true
             name: minio-env-config
+            accessKey:
+            secretKey:
             # accessKey: minio-tenant-admin
             # secretKey: UFcEMFi8HjVx0AIWGhSXm8pC296Chme/k/1tM32K
           configuration:
