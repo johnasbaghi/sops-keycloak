@@ -1,0 +1,118 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "5"
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  name: vault
+spec:
+  destination:
+    name: in-cluster
+    namespace: vault
+  project: default
+  sources:
+    - chart: vault
+      helm:
+        valuesObject:
+          global:
+            enabled: true
+            tlsDisable: false
+          injector:
+            enabled: false
+            image:
+              repository: hashicorp/vault-k8s
+              tag: 1.2.1
+            resources:
+              limits:
+                cpu: 250m
+                memory: 256Mi
+              requests:
+                cpu: 250m
+                memory: 256Mi
+          server:
+            auditStorage:
+              enabled: true
+            extraEnvironmentVars:
+              VAULT_CACERT: /vault/userconfig/tls-server/ca.crt
+            extraVolumes:
+              - name: tls-server
+                type: secret
+            ha:
+              enabled: true
+              raft:
+                config: |
+                  ui = true
+                  listener "tcp" {
+                  	address = "[::]:8200"
+                  	cluster_address = "[::]:8201"
+                  	tls_cert_file = "/vault/userconfig/tls-server/tls.crt"
+                  	tls_key_file = "/vault/userconfig/tls-server/tls.key"
+                  	tls_client_ca_file = "/vault/userconfig/tls-server/ca.crt"
+                  }
+
+                  storage "raft" {
+                  	path = "/vault/data"
+                  	retry_join {
+                  		leader_api_addr = "https://vault-0.vault-internal:8200"
+                  		leader_ca_cert_file = "/vault/userconfig/tls-server/ca.crt"
+                  		leader_client_cert_file = "/vault/userconfig/tls-server/tls.crt"
+                  		leader_client_key_file = "/vault/userconfig/tls-server/tls.key"
+                  	}
+                  	retry_join {
+                  		leader_api_addr = "https://vault-1.vault-internal:8200"
+                  		leader_ca_cert_file = "/vault/userconfig/tls-server/ca.crt"
+                  		leader_client_cert_file = "/vault/userconfig/tls-server/tls.crt"
+                  		leader_client_key_file = "/vault/userconfig/tls-server/tls.key"
+                  	}
+                  	retry_join {
+                  		leader_api_addr = "https://vault-2.vault-internal:8200"
+                  		leader_ca_cert_file = "/vault/userconfig/tls-server/ca.crt"
+                  		leader_client_cert_file = "/vault/userconfig/tls-server/tls.crt"
+                  		leader_client_key_file = "/vault/userconfig/tls-server/tls.key"
+                  	}
+                  }
+
+                  service_registration "kubernetes" {}
+                enabled: true
+                setNodeId: true
+              replicas: 3
+            image:
+              repository: hashicorp/vault
+              tag: 1.14.2
+            livenessProbe:
+              enabled: true
+              initialDelaySeconds: 300
+              path: /v1/sys/health?standbyok=true
+            readinessProbe:
+              enabled: true
+              path: /v1/sys/health?standbyok=true&sealedcode=204&uninitcode=204
+            resources:
+              limits:
+                cpu: 4000m
+                memory: 16Gi
+              requests:
+                cpu: 2000m
+                memory: 8Gi
+            standalone:
+              enabled: false
+          ui:
+            enabled: false
+            externalPort: 8200
+            serviceNodePort: null
+            serviceType: LoadBalancer
+      repoURL: https://helm.releases.hashicorp.com
+      targetRevision: 0.25.0
+    - path: vault
+      repoURL: https://github.com/DevalexLLC/argocd-cluster-test
+      targetRevision: HEAD
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    managedNamespaceMetadata:
+      labels:
+        linkerd.io/inject: enabled
+        pod-security.kubernetes.io/enforce: baseline
+    syncOptions:
+      - CreateNamespace=true
