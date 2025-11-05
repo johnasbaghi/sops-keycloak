@@ -10,13 +10,19 @@ spec:
       - name: secret-name
         value: vault-initial-secret
       - name: oidc-issuer
-        value: https://auth.localhost/realms/dev-test
+        value: https://sops-auth.orlandotorres.dev/realms/dev-test
       - name: oidc-client
         value: vault-prod
       - name: oidc-secret
         value: l2FLwizbuasxP2OaxXqPeBwCkyOZ4ux2
+      # Note:
+      # - name: oidc-secret
+      #   valueFrom:
+      #     secretKeyRef:
+      #       name: vault-setup-workflow-secret
+      #       key: oidc-secret
       - name: vault-domain
-        value: https://vault.localhost
+        value: https://sops-vault.orlandotorres.dev
   entrypoint: main
   imagePullSecrets: []
   templates:

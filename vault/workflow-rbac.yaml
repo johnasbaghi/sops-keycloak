@@ -50,4 +50,4 @@ roleRef:
 subjects:
   - kind: ServiceAccount
     name: argo-workflow
-    namespace: vault
+    namespace: sops-vault

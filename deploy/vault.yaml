@@ -5,11 +5,12 @@ metadata:
     argocd.argoproj.io/sync-wave: "5"
   finalizers:
     - resources-finalizer.argocd.argoproj.io
-  name: vault
+  name: sops-vault
+  namespace: argocd
 spec:
   destination:
     name: in-cluster
-    namespace: vault
+    namespace: sops-vault
   project: default
   sources:
     - chart: vault
@@ -104,7 +105,7 @@ spec:
       repoURL: https://helm.releases.hashicorp.com
       targetRevision: 0.25.0
     - path: vault
-      repoURL: https://github.com/DevalexLLC/argocd-cluster-test
+      repoURL: https://github.com/johnasbaghi/sops-keycloak
       targetRevision: HEAD
   syncPolicy:
     automated:
