@@ -14,3 +14,9 @@ resources:
   - vault-setup-wf.yaml
   - vault-unseal-wf.yaml
   - workflow-rbac.yaml
+secretGenerator:
+  - literals:
+      - oidc-issuer=https://sops-auth.orlandotorres.dev/realms/dev-test
+      - oidc-client=vault-prod
+      - oidc-secret=l2FLwizbuasxP2OaxXqPeBwCkyOZ4ux2
+    name: oidc-secret

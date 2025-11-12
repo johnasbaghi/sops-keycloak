@@ -9,18 +9,14 @@ spec:
     parameters:
       - name: secret-name
         value: vault-initial-secret
-      - name: oidc-issuer
-        value: https://sops-auth.orlandotorres.dev/realms/dev-test
-      - name: oidc-client
-        value: vault-prod
-      - name: oidc-secret
-        value: l2FLwizbuasxP2OaxXqPeBwCkyOZ4ux2
-      # Note:
+      - name: oidc-secret-name
+        value: oidc-secret
+      # - name: oidc-issuer
+      #   value: https://sops-auth.orlandotorres.dev/realms/dev-test
+      # - name: oidc-client
+      #   value: vault-prod
       # - name: oidc-secret
-      #   valueFrom:
-      #     secretKeyRef:
-      #       name: vault-setup-workflow-secret
-      #       key: oidc-secret
+      #   value: l2FLwizbuasxP2OaxXqPeBwCkyOZ4ux2
       - name: vault-domain
         value: https://sops-vault.orlandotorres.dev
   entrypoint: main
@@ -156,14 +152,14 @@ spec:
             vault auth enable -listing-visibility=unauth oidc
 
             vault write auth/oidc/config \
-              oidc_discovery_url="{{workflow.parameters.oidc-issuer}}" \
+              oidc_discovery_url="$OIDC_ISSUER" \
               oidc_discovery_ca_pem=@/certs/ca-bundle.pem \
-              oidc_client_id="{{workflow.parameters.oidc-client}}" \
-              oidc_client_secret="{{workflow.parameters.oidc-secret}}" \
+              oidc_client_id="$OIDC_CLIENT" \
+              oidc_client_secret="OIDC_SECRET" \
               default_role="keycloak-default"
 
             vault write auth/oidc/role/keycloak-default \
-              bound_audiences="{{workflow.parameters.oidc-client}}" \
+              bound_audiences="$OIDC_CLIENT" \
               allowed_redirect_uris="{{workflow.parameters.vault-domain}}/ui/vault/auth/oidc/oidc/callback" \
               allowed_redirect_uris="http://localhost:8250/oidc/callback" \
               user_claim="preferred_username" \
@@ -190,6 +186,21 @@ spec:
             value: https://vault-0.vault-internal:8200
           - name: VAULT_CACERT
             value: /certs/ca-bundle.pem
+          - name: OIDC_ISSUER
+            valueFrom:
+              secretKeyRef:
+                key: oidc-issuer
+                name: '{{workflow.parameters.oidc-secret-name}}'
+          - name: OIDC_CLIENT
+            valueFrom:
+              secretKeyRef:
+                key: oidc-client
+                name: '{{workflow.parameters.oidc-secret-name}}'
+          - name: OIDC_SECRET
+            valueFrom:
+              secretKeyRef:
+                key: oidc-secret
+                name: '{{workflow.parameters.oidc-secret-name}}'
           - name: VAULT_TOKEN
             valueFrom:
               secretKeyRef:
