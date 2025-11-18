@@ -11,6 +11,9 @@ spec:
     namespace: sops-harbor
   project: default
   sources:
+    - path: secrets/harbor
+      repoURL: https://github.com/johnasbaghi/sops-keycloak
+      targetRevision: HEAD
     - chart: harbor
       helm:
         valuesObject:
@@ -66,9 +69,6 @@ spec:
       repoURL: https://helm.goharbor.io
       targetRevision: 1.15.1
     - path: harbor
-      repoURL: https://github.com/johnasbaghi/sops-keycloak
-      targetRevision: HEAD
-    - path: secrets/harbor
       repoURL: https://github.com/johnasbaghi/sops-keycloak
       targetRevision: HEAD
   syncPolicy:
