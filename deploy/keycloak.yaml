@@ -10,10 +10,13 @@ spec:
     name: in-cluster
     namespace: sops-keycloak
   project: default
-  source:
-    path: keycloak
-    repoURL: https://github.com/johnasbaghi/sops-keycloak
-    targetRevision: HEAD
+  sources:
+    - path: secrets/keycloak
+      repoURL: https://github.com/johnasbaghi/sops-keycloak
+      targetRevision: HEAD
+    - path: keycloak
+      repoURL: https://github.com/johnasbaghi/sops-keycloak
+      targetRevision: HEAD
   syncPolicy:
     automated:
       prune: true

@@ -6,10 +6,38 @@ spec:
   keycloakCRName: keycloak
   # Note: placeholder for harbor-prod client secret.
   placeholders:
-    ENV_KEY:
+    SOPS_HARBOR_CLIENT_SECRET:
       secret:
-        name: sops-keycloak-harbor-client-secret
-        key: client-secret
+        name: sops-keycloak-secrets
+        key: sops-harbor-client-secret
+    ARGOCD_CLIENT_SECRET:
+      secret:
+        name: sops-keycloak-secrets
+        key: argocd-client-secret
+    ARGO_WORKFLOWS_CLIENT_SECRET:
+      secret:
+        name: sops-keycloak-secrets
+        key: argo-workflows-client-secret
+    GRAFANA_CLIENT_SECRET:
+      secret:
+        name: sops-keycloak-secrets
+        key: grafana-client-secret
+    MINIO_CLIENT_SECRET:
+      secret:
+        name: sops-keycloak-secrets
+        key: minio-client-secret
+    OPEN_WEBUI_CLIENT_SECRET:
+      secret:
+        name: sops-keycloak-secrets
+        key: open-webui-client-secret
+    OUTLINE_CLIENT_SECRET:
+      secret:
+        name: sops-keycloak-secrets
+        key: outline-client-secret
+    VAULT_CLIENT_SECRET:
+      secret:
+        name: sops-keycloak-secrets
+        key: vault-client-secret
   realm:
     accessCodeLifespan: 60
     accessCodeLifespanLogin: 1800
@@ -1396,7 +1424,7 @@ spec:
         redirectUris:
           - /auth/callback
         rootUrl: https://sops-argocd.orlandotorres.dev
-        secret: Trib33Jjp0r8tQS1NCkpY1YQMaISVlJC
+        secret: "${ARGOCD_CLIENT_SECRET}"
         serviceAccountsEnabled: false
         standardFlowEnabled: true
         surrogateAuthRequired: false
@@ -1449,7 +1477,7 @@ spec:
         redirectUris:
           - /oauth2/callback
         rootUrl: https://sops-argo-workflows.orlandotorres.dev
-        secret: DnbqWVVvIL8OJJ6zicWLIQikuVJy529t
+        secret: "${ARGO_WORKFLOWS_CLIENT_SECRET}"
         serviceAccountsEnabled: false
         standardFlowEnabled: true
         surrogateAuthRequired: false
@@ -1553,7 +1581,7 @@ spec:
         redirectUris:
           - /login/generic_oauth
         rootUrl: https://sops-grafana.orlandotorres.dev
-        secret: pvXlCpL1NyvaslgzBCrWHhmLpcSTcGNp
+        secret: "${GRAFANA_CLIENT_SECRET}"
         serviceAccountsEnabled: false
         standardFlowEnabled: true
         surrogateAuthRequired: false
@@ -1607,7 +1635,7 @@ spec:
           - /c/oidc/callback
         rootUrl: https://sops-harbor.orlandotorres.dev
         # Note: Replace hardcoded secret for harbor-prod with a placeholder.
-        secret: "${ENV_KEY}"
+        secret: "${SOPS_HARBOR_CLIENT_SECRET}"
         serviceAccountsEnabled: false
         standardFlowEnabled: true
         surrogateAuthRequired: false
@@ -1719,7 +1747,7 @@ spec:
         redirectUris:
           - /oauth_callback
         rootUrl: https://sops-minio.orlandotorres.dev
-        secret: zH9XPCHqjnzxME7IQRNmWK14u7qTIPVs
+        secret: "${MINIO_CLIENT_SECRET}"
         serviceAccountsEnabled: false
         standardFlowEnabled: true
         surrogateAuthRequired: false
@@ -1788,7 +1816,7 @@ spec:
         redirectUris:
           - /oauth/oidc/callback
         rootUrl: https://sops-open-webui.orlandotorres.dev
-        secret: jaiDXffHVy1g0s6VG7OOApodVj1vRmaE
+        secret: "${OPEN_WEBUI_CLIENT_SECRET}"
         serviceAccountsEnabled: false
         standardFlowEnabled: true
         surrogateAuthRequired: false
@@ -1839,7 +1867,7 @@ spec:
         redirectUris:
           - /auth/oidc.callback
         rootUrl: https://sops-outline.orlandotorres.dev
-        secret: sypgwZpJbbD8stJ5yCBu7WHzr3hSrtlT
+        secret: "${OUTLINE_CLIENT_SECRET}"
         serviceAccountsEnabled: false
         standardFlowEnabled: true
         surrogateAuthRequired: false
@@ -2165,7 +2193,7 @@ spec:
         redirectUris:
           - /ui/vault/auth/oidc/oidc/callback
         rootUrl: https://sops-vault.orlandotorres.dev
-        secret: l2FLwizbuasxP2OaxXqPeBwCkyOZ4ux2
+        secret: "${VAULT_CLIENT_SECRET}"
         serviceAccountsEnabled: false
         standardFlowEnabled: true
         surrogateAuthRequired: false
